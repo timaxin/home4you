@@ -8,12 +8,16 @@ runs:
       with:
         node-version: 20
 
-    - name: Cache dependencies ⚡
-      id: cache_dependencies
-      uses: actions/cache@v3
+    - name: Restore cache ⚡
+      uses: actions/cache@v4
       with:
-        path: node_modules
-        key: node-modules-${{ hashFiles('package-lock.json') }}
+        path: |
+          .next/cache
+        # Generate a new cache whenever packages or source files change.
+        key: Linux-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+        # If source files changed but packages didn't, rebuild from a prior cache.
+        restore-keys: |
+          Linux-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
     - name: Install dependencies 🔧
       shell: bash
