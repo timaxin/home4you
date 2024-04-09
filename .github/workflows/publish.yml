@@ -34,7 +34,7 @@ jobs:
 
       - name: Show content of Root folder
         shell: bash
-        run: ls -al
+        run: ls -al && cd .. && ls -al
 
       - name: Upload artifact 📡
         uses: actions/upload-pages-artifact@v3
