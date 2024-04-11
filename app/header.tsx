@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 export default function Header() {
   const pathname = usePathname();
   return (
-    <header className="p-8 flex justify-between bg-white">
+    <header className="px-6 py-8 flex justify-between bg-white">
       <Link href='/' className="text-blue-700 font-bold text-lg">Home 4 You</Link>
       <nav className="flex font-light space-x-10">
         <Link href="/" className={`my-auto hover:text-stone-500 link ${pathname === '/' ? 'active' : ''}`}>Home</Link>
