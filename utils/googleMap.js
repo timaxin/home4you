@@ -1,29 +1,33 @@
 import {useRef, useEffect, useMemo, useState} from 'react';
 import loader from './googleMapsLoader';
 
-const Map = ({ className }) => {
+const Map = ({ address, className }) => {
   const [map, setMap] = useState(null);
   const mapRef = useRef(null);
   useEffect(() => {
     loader.load().then(() => {
-      const mapOptions = {
-        center: {
-          lat: 51.776763442061856,
-          lng: 19.454719540402984,
-        },
-        zoom: 15,
-      };
-      const newMap = new window.google.maps.Map(
-        mapRef.current,
-        mapOptions
-      );
-      const marker = new window.google.maps.Marker({
-        position: mapOptions.center,
-        map: newMap,
+      const geocoder = new window.google.maps.Geocoder();
+      geocoder.geocode({address}, (results, status) => {
+        if(status === 'OK') {
+          const mapOptions = {
+            center: results[0].geometry.location,
+            zoom: 15,
+          };
+          const newMap = new window.google.maps.Map(
+            mapRef.current,
+            mapOptions
+          );
+          const marker = new window.google.maps.Marker({
+            position: mapOptions.center,
+            map: newMap,
+          });
+          setMap(newMap);
+        } else {
+          console.error(`Address ${address} cannot be geocoded`);
+        }
       });
-      setMap(newMap);
     });
-  }, []);
+  }, [address]);
   return <div id="map" className={className} ref={mapRef}></div>;
 };
 export default Map;
