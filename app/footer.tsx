@@ -11,7 +11,7 @@ export default function Footer() {
           <div id="lodz-map">INSERT MAP</div>
         </div>
         <div className="basis-2/5">
-          <div className="text-blue-900 text-lg pb-8 uppercase">Ask any question, we're here to help:</div>
+          <div className="text-blue-900 text-lg pb-8 uppercase">{`Ask any question, we're here to help:`}</div>
         </div>
       </div>
     </footer>
